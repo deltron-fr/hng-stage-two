@@ -34,7 +34,7 @@ services:
       - ACTIVE_POOL=${ACTIVE_POOL}
       - PORT=${PORT}
     command: >
-      /bin/sh -c "envsubst '$$PORT' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf &&
+      /bin/sh -c "envsubst '$$PORT' '$$ACTIVE_POOL' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf &&
       nginx -g 'daemon off;'"
     depends_on:
       - green
