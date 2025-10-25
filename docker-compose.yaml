@@ -34,8 +34,15 @@ services:
       - ACTIVE_POOL=${ACTIVE_POOL}
       - PORT=${PORT}
     command: >
-      /bin/sh -c "envsubst '$$PORT $$ACTIVE_POOL' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf &&
-      nginx -g 'daemon off;'"
+      /bin/sh -c "
+        if [ \"$ACTIVE_POOL\" = 'blue' ]; then
+          export PRIMARY=app_blue; export BACKUP=app_green;
+        else
+          export PRIMARY=app_green; export BACKUP=app_blue;
+        fi;
+        envsubst '\$PORT \$PRIMARY \$BACKUP' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf &&
+        nginx -g 'daemon off;'
+      "
     depends_on:
       - green
       - blue
