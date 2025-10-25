@@ -4,7 +4,7 @@ events { worker_connections 1024; }
 http {
     upstream backend {
         server app_${ACTIVE_POOL}:${PORT} max_fails=1 fail_timeout=5s;
-        server app_$([ "$ACTIVE_POOL" = "blue" ] && echo "green" || echo "blue"):${PORT} backup;
+        server app_$([ "$ACTIVE_POOL" = blue ] && echo green || echo blue):${PORT} backup;
     }
 
     server {
