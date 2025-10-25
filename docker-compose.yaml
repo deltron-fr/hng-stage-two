@@ -40,7 +40,7 @@ services:
         else
           export PRIMARY=app_green; export BACKUP=app_blue;
         fi;
-        envsubst '\$PORT \$PRIMARY \$BACKUP' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf &&
+        envsubst '\$${PORT} \$${PRIMARY} \$${BACKUP}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf &&
         nginx -g 'daemon off;'
       "
     depends_on:
