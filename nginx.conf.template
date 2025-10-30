@@ -7,8 +7,10 @@ http {
         server ${BACKUP}:${PORT} backup;
     }
 
+    
+    log_format custom '$remote_addr - $sent_x_app_pool - $sent_x_release_id - $upstream_response_time - $upstream_status - $request_time'
     access_log /var/log/nginx/access.log;
-
+    
     server {
         listen 80;
 
