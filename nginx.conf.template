@@ -8,7 +8,7 @@ http {
     }
 
     
-    log_format custom '$remote_addr - $sent_http_x_app_pool - $sent_http_x_release_id - $upstream_response_time - $upstream_status - $request_time'
+    log_format custom '$remote_addr - $sent_http_x_app_pool - $sent_http_x_release_id - $upstream_response_time - $upstream_status - $request_time';
     
     server {
         listen 80;
