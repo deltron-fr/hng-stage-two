@@ -8,9 +8,9 @@ http {
     }
 
     
-    log_format custom '$remote_addr - $sent_x_app_pool - $sent_x_release_id - $upstream_response_time - $upstream_status - $request_time'
-    access_log /var/log/nginx/access.log;
-    
+    log_format custom '$remote_addr - $sent_http_x_app_pool - $sent_http_x_release_id - $upstream_response_time - $upstream_status - $request_time'
+    access_log /var/log/nginx/access.log custom;
+
     server {
         listen 80;
 
