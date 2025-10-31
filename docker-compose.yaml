@@ -29,8 +29,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./nginx.conf.template:/etc/nginx/nginx.conf.template:ro
-      - nginx-logs:/var/log/nginx
+      - "./nginx.conf.template:/etc/nginx/nginx.conf.template:ro"
     environment:
       - ACTIVE_POOL=${ACTIVE_POOL}
       - PORT=${PORT}
@@ -50,21 +49,6 @@ services:
       - blue
     networks:
       - app_network
-
-  watcher:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: log_watcher
-    volumes:
-      - nginx-logs:/var/log/nginx
-    env_file:
-      - .env
-    networks:
-      - app_network
-
-volumes:
-  nginx-logs:
 
 networks:
   app_network:
