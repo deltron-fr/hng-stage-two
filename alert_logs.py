@@ -12,14 +12,14 @@ ALERT_COOLDOWN_SEC = os.getenv("ALERT_COOLDOWN_SEC")
 
 last_time = 0
 
-dq = collections.deque([], WINDOW_SIZE)
+dq = collections.deque([], int(WINDOW_SIZE))
+
 
 with open("/var/log/nginx/access.log", "r") as f:
     
     while True:
         entries = f.readline()
         if not entries:
-            print("no entry")
             time.sleep(0.2)
             continue
         
@@ -28,7 +28,7 @@ with open("/var/log/nginx/access.log", "r") as f:
         current_app_pool = logs[0].split(" - ")[1]
         
         if current_app_pool != previous_app_pool:
-            if time.time() - last_time > ALERT_COOLDOWN_SEC:
+            if time.time() - last_time > int(ALERT_COOLDOWN_SEC):
                 payload = {"text": f"application pool changed from {previous_app_pool} to {current_app_pool}"}
                 requests.post(SLACK_WEBHOOK_URL, json=payload)
                 previous_app_pool = current_app_pool
@@ -40,9 +40,8 @@ with open("/var/log/nginx/access.log", "r") as f:
         dq.append(code)
 
         percentage = (sum(1 for c in dq if c.startswith("5"))  / len(dq)) * 100
-        print(percentage, code)
 
-        if percentage > ERROR_RATE_THRESHOLD and code.startswith("5") :
+        if percentage > int(ERROR_RATE_THRESHOLD) and code.startswith("5") :
             payload = {"text": f"error rate has exceeded 30 percent"}
             requests.post(SLACK_WEBHOOK_URL, json=payload)
             
