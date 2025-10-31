@@ -1,5 +1,8 @@
 import requests, time, collections
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 SLACK_WEBHOOK_URL = os.getenv("SLACK_WEBHOOK_URL")
 APP_POOL = os.getenv("ACTIVE_POOL")
