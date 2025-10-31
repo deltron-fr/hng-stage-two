@@ -42,7 +42,6 @@ services:
           export PRIMARY=app_green; export BACKUP=app_blue;
         fi;
         envsubst '\$${PORT} \$${PRIMARY} \$${BACKUP}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf &&
-        nginx -t;
         nginx -g 'daemon off;'
       "
     depends_on:
@@ -57,9 +56,11 @@ services:
       dockerfile: Dockerfile
     container_name: log_watcher
     volumes:
-      - nginx-logs:/var/log/nginx
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     env_file:
       - .env
+    depends_on:
+      - nginx
     networks:
       - app_network
 

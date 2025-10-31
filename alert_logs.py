@@ -1,5 +1,6 @@
 import requests, time, collections
 import os
+import docker
 from dotenv import load_dotenv
 
 load_dotenv()
