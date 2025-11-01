@@ -124,7 +124,6 @@ curl -X POST http://localhost:8080/chaos/start?mode=error
 # Stop chaos simulation
 curl -X POST http://localhost:8080/chaos/stop
 # Returns: {"message":"Simulation stopped"}
-
 ```
 
 #### View logs and monitor failover
@@ -151,7 +150,7 @@ To enable Slack notifications:
 
 Example alerts are shown below:
 
-![Slack alerts example](assets/slack_alerts.png)
+![Slack alerts example](assets/slack-alerts.png)
 
 See `runbook.md` for detailed incident response procedures.
 
