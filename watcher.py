@@ -27,7 +27,6 @@ def post_slack(message):
     except Exception as e:
         print(f"Failed to send Slack alert: {e}")
 
-print("Watcher started, tailing container logs...")
 
 for line in nginx_container.logs(stream=True, follow=True):
     try:
