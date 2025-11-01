@@ -1,9 +1,9 @@
 ## Runbook: Handling Blue/Green Failovers and 5xx Error rates
 
-**Last Updated**: 01-11-2025
-**Severity**: High
-**Team**: DevOps Team
-**Category**: Incident Response
+- **Last Updated**: 01-11-2025
+- **Severity**: High
+- **Team**: DevOps Team
+- **Category**: Incident Response
 
 ---
 

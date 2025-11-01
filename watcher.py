@@ -3,6 +3,7 @@ import time
 import collections
 import requests
 import docker
+from datetime import datetime, timezone
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -43,7 +44,7 @@ for line in nginx_container.logs(stream=True, follow=True):
 
         if current_app_pool != previous_app_pool:
             if time.time() - last_failover_alert > ALERT_COOLDOWN_SEC:
-                post_slack(f"Application pool changed from {previous_app_pool} to {current_app_pool}")
+                post_slack(f"Application pool changed from {previous_app_pool} to {current_app_pool}\nTime: {datetime.now(timezone.utc)}")
                 last_failover_alert = time.time()
             previous_app_pool = current_app_pool
 
@@ -52,7 +53,7 @@ for line in nginx_container.logs(stream=True, follow=True):
 
         if error_rate > ERROR_RATE_THRESHOLD and status_code.startswith("5"):
             if time.time() - last_error_alert > ALERT_COOLDOWN_SEC:
-                post_slack(f"Error rate exceeded {ERROR_RATE_THRESHOLD}% over last {WINDOW_SIZE} requests: {error_rate:.2f}%")
+                post_slack(f"Error rate exceeded {ERROR_RATE_THRESHOLD}% over last {WINDOW_SIZE} requests: {error_rate:.2f}%\nTime: {datetime.now(timezone.utc)}")
                 last_error_alert = time.time()
 
     except Exception as e:
