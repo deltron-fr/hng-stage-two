@@ -63,6 +63,8 @@ Blue/Green Failovers and 5xx Errors usually indicate server failures such as:
   - Notify on-call **Backend** engineers  
   - Create an incident ticket
 
+---
+
 ## 5. Post-Incident Actions
 
 - Gather metrics from before/during/after incident  
