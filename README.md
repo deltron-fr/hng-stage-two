@@ -105,4 +105,54 @@ This recreates the `nginx` container with the updated `ACTIVE_POOL` and re-rende
 - If Nginx cannot reach the app containers, confirm the `PORT` in `.env` matches the port the app inside the image listens on.
 - Ensure Docker can pull the images named in `BLUE_IMAGE` and `GREEN_IMAGE` or that they exist locally.
 
+### Testing and Monitoring
+
+#### Testing endpoints
+
+Check application health:
+```bash
+curl http://localhost:8080/version
+# Should return: {"status":"OK","message":"Application version in header"}
+```
+
+Control chaos testing:
+```bash
+# Start error simulation
+curl -X POST http://localhost:8080/chaos/start?mode=error
+# Returns: {"message":"Simulation mode 'error' activated"}
+
+# Stop chaos simulation
+curl -X POST http://localhost:8080/chaos/stop
+# Returns: {"message":"Simulation stopped"}
+
+```
+
+#### View logs and monitor failover
+
+View Nginx logs (includes failover events and error rates):
+```bash
+sudo docker logs nginx
+# or follow logs
+sudo docker logs -f nginx
+```
+
+#### Slack notifications
+
+The watcher service monitors Nginx logs and sends alerts to Slack when:
+- Application pool changes (failover events)
+- Error rate exceeds threshold (default 2% over 200 requests)
+
+To enable Slack notifications:
+1. Create a Slack app and get a webhook URL for your workspace
+2. Add the webhook URL to your `.env`:
+   ```
+   SLACK_WEBHOOK_URL="https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
+   ```
+
+Example alerts are shown below:
+
+![Slack alerts example](assets/slack_alerts.png)
+
+See `runbook.md` for detailed incident response procedures.
+
 
